@@ -6,8 +6,8 @@ static const unsigned int gappx     = 12;       /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Fira Code:size=10" };
-static const char dmenufont[]       = "Fira Code:size=10";
+static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "Font Awesome 5 Free Solid:size=10", "Font Awesome 5 Free Regular:size=10", "Font Awesome 5 Free Brands:size=10" };
+static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const char col_gray1[]       = "#282a36";
@@ -28,7 +28,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "ﱮ", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -66,7 +66,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "rofi", "-modi", "window,run,ssh,drun", "-show-icons", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
