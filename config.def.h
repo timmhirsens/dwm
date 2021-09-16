@@ -10,11 +10,11 @@ static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "Font
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
-static const char col_gray1[]       = "#282a36";
-static const char col_gray2[]       = "#ffb86c";
-static const char col_gray3[]       = "#ff79c6";
-static const char col_gray4[]       = "#ffb86c";
-static const char col_cyan[]        = "#282a36";
+static const char col_gray1[]       = "#282c34";
+static const char col_gray2[]       = "#56b6c2";
+static const char col_gray3[]       = "#c678dd";
+static const char col_gray4[]       = "#56b6c2";
+static const char col_cyan[]        = "#282c34";
 static const char *colors[][3]      = {
 	    /*               fg         bg         border   */
 	    [SchemeNorm] = { col_gray3, col_gray1, col_cyan },
@@ -43,7 +43,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
@@ -88,6 +88,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
