@@ -72,6 +72,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-modi", "window,run,ssh,drun", "-show-icons", "-show", "drun", NULL };
+static const char *quitcmd[] = { "rofi", "-show", "power-menu", "-modi", "power-menu:rofi-power-menu" };
 static const char *termcmd[]  = { "st", NULL };
 #include "shift-tools.c"
 
