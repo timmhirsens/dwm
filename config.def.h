@@ -34,12 +34,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     		NULL,       NULL,       0,            1,           -1 },
-	{ "1Password",		NULL,       NULL,       0,            1,           -1 },
-	{ "stalonetray",     NULL,       NULL,       ~0,            1,           -1 },
-	{ "trayer",     NULL,       NULL,       ~0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class              instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",       		NULL,       NULL,       0,            1,           -1 },
+	{ "1Password",  		NULL,       NULL,       0,            1,           -1 },
+	{ "stalonetray",        NULL,       NULL,       ~0,            1,           -1 },
+	{ "trayer",             NULL,       NULL,       ~0,            1,           -1 },
+	{ "Firefox",            NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Microsoft Teams - Preview",  NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Slack",              NULL,       NULL,       1 << 3,       0,           -1 },
 };
 
 /* layout(s) */
@@ -73,7 +75,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-modi", "window,run,ssh,drun", "-show-icons", "-show", "drun", NULL };
 static const char *quitcmd[] = { "rofi", "-show", "power-menu", "-modi", "power-menu:rofi-power-menu" };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
