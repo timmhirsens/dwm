@@ -34,14 +34,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class              instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",       		NULL,       NULL,       0,            1,           -1 },
-	{ "1Password",  		NULL,       NULL,       0,            1,           -1 },
-	{ "stalonetray",        NULL,       NULL,       ~0,            1,           -1 },
-	{ "trayer",             NULL,       NULL,       ~0,            1,           -1 },
-	{ "Firefox",            NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Microsoft Teams - Preview",  NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Slack",              NULL,       NULL,       1 << 3,       0,           -1 },
+	/* class              instance    title       tags mask     isfloating   monitor  ignoretransient*/
+	{ "Gimp",       		NULL,       NULL,       0,            1,           -1, 0},
+	{ "1Password",  		NULL,       NULL,       0,            1,           -1, 0 },
+	{ "stalonetray",        NULL,       NULL,       ~0,            1,           -1, 0 },
+	{ "trayer",             NULL,       NULL,       ~0,            1,           -1, 0 },
+	{ "Firefox",            NULL,       NULL,       1 << 1,       0,           -1, 0 },
+	{ "Microsoft Teams - Preview",  NULL,       NULL,       1 << 3,       0,           -1, 0 },
+	{ "Slack",              NULL,       NULL,       1 << 3,       0,           -1, 0 },
+	{ "jetbrains-idea",     NULL,       NULL,       1 << 2,       0,           -1, 1 },
 };
 
 /* layout(s) */

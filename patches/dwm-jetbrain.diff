@@ -1,0 +1,90 @@
+diff --git a/config.h b/config.h
+index 09cfcd8..70d0c76 100644
+--- a/config.h
++++ b/config.h
+@@ -50,27 +50,27 @@ static const Rule rules[] = {
+ 	 */
+ 	/* class                 instance    title       tags mask     isfloating   monitor */
+ 
+-  { "TelegramDesktop",    NULL,       NULL,       1 << 0,       0,           -1 },
+-  { "Skype",               NULL,       NULL,       1 << 0,       0,           -1 },
++  { "TelegramDesktop",    NULL,       NULL,       1 << 0,       0,             -1,     0},
++  { "Skype",               NULL,       NULL,       1 << 0,       0,           -1,    0},
+ 
+-	{ "firefox",           NULL,       NULL,       1 << 1,       0,           -1 },
+-  { "Chromium",            NULL,       NULL,       1 << 1,       0,           -1 },
++	{ "firefox",           NULL,       NULL,       1 << 1,       0,           -1,    0},
++  { "Chromium",            NULL,       NULL,       1 << 1,       0,           -1,    0},
+ 
+-  { "Gimp",                NULL,       NULL,       1 << 2,       0,           -1 },
+-  { "Rawtherapee",         NULL,       NULL,       1 << 2,       0,           -1 },
+-  { "Inkscape",            NULL,       NULL,       1 << 2,       0,           -1 },
+-  { "Vuescan",             NULL,       NULL,       1 << 2,       0,           -1 },
++  { "Gimp",                NULL,       NULL,       1 << 2,       0,           -1,    0},
++  { "Rawtherapee",         NULL,       NULL,       1 << 2,       0,           -1,    0},
++  { "Inkscape",            NULL,       NULL,       1 << 2,       0,           -1,    0},
++  { "Vuescan",             NULL,       NULL,       1 << 2,       0,           -1,    0},
+ 
+-  { "Atom",                NULL,       NULL,      1 <<  3,       0,           -1 },
+-  { "jetbrains-webstorm",  NULL ,      NULL,      1 <<  3,       0,           -1 },
++  { "Atom",                NULL,       NULL,      1 <<  3,       0,           -1,    0},
++  { "jetbrains-webstorm",  NULL ,      NULL,      1 <<  3,       0,           -1,    1},
+ 
+-  { "kile",                NULL,       NULL,      1 <<  4,       0,           -1 },
+-  { "Texmaker",            NULL,       NULL,      1 <<  4,       0,           -1 },
+-  { "robo3t",              NULL,       NULL,      1 <<  4,       0,           -1 },
+-  { "libreoffice-writer",  NULL,       NULL,      1 <<  4,       0,           -1 },
+-  { "libreoffice-calc",    NULL,       NULL,      1 <<  4,       0,           -1 },
++  { "kile",                NULL,       NULL,      1 <<  4,       0,           -1,    0},
++  { "Texmaker",            NULL,       NULL,      1 <<  4,       0,           -1,    0},
++  { "robo3t",              NULL,       NULL,      1 <<  4,       0,           -1,    0},
++  { "libreoffice-writer",  NULL,       NULL,      1 <<  4,       0,           -1,    0},
++  { "libreoffice-calc",    NULL,       NULL,      1 <<  4,       0,           -1,    0},
+ 
+-  { "Arandr",              NULL ,      NULL,      1 <<  8,       0,           -1 },
++  { "Arandr",              NULL ,      NULL,      1 <<  8,       0,           -1,    0},
+ };
+ 
+ /* layout(s) */
+diff --git a/dwm.c b/dwm.c
+index 8ffd27f..0901246 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -95,7 +95,7 @@ struct Client {
+ 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
+ 	int bw, oldbw;
+ 	unsigned int tags;
+-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
++	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, ignoretransient;
+ 	Client *next;
+ 	Client *snext;
+ 	Monitor *mon;
+@@ -142,6 +142,7 @@ typedef struct {
+ 	unsigned int tags;
+ 	int isfloating;
+ 	int monitor;
++	int ignoretransient;
+ } Rule;
+ 
+ /* function declarations */
+@@ -311,6 +312,7 @@ applyrules(Client *c)
+ 		&& (!r->instance || strstr(instance, r->instance)))
+ 		{
+ 			c->isfloating = r->isfloating;
++			c->ignoretransient = r->ignoretransient;
+ 			c->tags |= r->tags;
+ 			for (m = mons; m && m->num != r->monitor; m = m->next);
+ 			if (m)
+@@ -1289,9 +1291,9 @@ propertynotify(XEvent *e)
+ 		switch(ev->atom) {
+ 		default: break;
+ 		case XA_WM_TRANSIENT_FOR:
+-			if (!c->isfloating && (XGetTransientForHint(dpy, c->win, &trans)) &&
+-				(c->isfloating = (wintoclient(trans)) != NULL))
+-				arrange(c->mon);
++			if (!c->ignoretransient && !c->isfloating && (XGetTransientForHint(dpy, c->win, &trans)) &&
++			(c->isfloating = (wintoclient(trans)) != NULL))
++			    arrange(c->mon);
+ 			break;
+ 		case XA_WM_NORMAL_HINTS:
+ 			updatesizehints(c);
