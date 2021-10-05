@@ -78,10 +78,14 @@ static const char *dmenucmd[] = { "rofi", "-modi", "window,run,ssh,drun", "-show
 static const char *quitcmd[] = { "rofi", "-show", "power-menu", "-modi", "power-menu:rofi-power-menu" };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "kitty", "--name", scratchpadname, NULL };
+static const char *volumeupcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *volumedowncmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *volumemutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 
 #include "shift-tools.c"
 #include "focusurgent.c"
+#include <X11/XF86keysym.h>
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -135,6 +139,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = quitcmd } },
+	{ 0, 							XF86XK_AudioLowerVolume, spawn, {.v = volumedowncmd }  },
+	{ 0, 							XF86XK_AudioRaiseVolume, spawn, {.v = volumeupcmd }  },
+	{ 0, 							XF86XK_AudioMute, 		 spawn, {.v = volumemutecmd }  } 
 };
 
 /* button definitions */
