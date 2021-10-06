@@ -16,7 +16,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 /*  Modes after showtab_nmodes are disabled.                                */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
 static const int showtab			= showtab_auto;        /* Default tab bar show mode */
-static const int toptab				= False;               /* False means bottom tab bar */
+static const int toptab				= 1;               /* False means bottom tab bar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "Font Awesome 5 Free Solid:size=10", "Font Awesome 5 Free Regular:size=10", "Font Awesome 5 Free Brands:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const unsigned int baralpha = 0xd0;
