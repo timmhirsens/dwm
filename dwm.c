@@ -990,7 +990,8 @@ dirtomon(int dir)
 
 int
 drawstatusbar(Monitor *m, int bh, char* stext) {
-	int ret, i, w, x, len, stw;
+	int ret, i, w, x, len;
+    int stw = 0;
 	short isCode = 0;
 	char *text;
 	char *p;
