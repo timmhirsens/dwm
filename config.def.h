@@ -12,6 +12,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 22;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 6;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "Font Awesome 5 Free Solid:size=10", "Font Awesome 5 Free Regular:size=10", "Font Awesome 5 Free Brands:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const unsigned int baralpha = 0xd0;
@@ -31,7 +33,12 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "ﱮ", "", "", "", "" };
+static const char *tags[] = { " ", " ", " ", " ", "ﱮ " , " ", " ", " ", " " };
+
+static const unsigned int ulinepad	= 4;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -59,7 +66,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 /* Bartabgroups properties */
 #define BARTAB_BORDERS 1       // 0 = off, 1 = on
-#define BARTAB_BOTTOMBORDER 1  // 0 = off, 1 = on
+#define BARTAB_BOTTOMBORDER 0  // 0 = off, 1 = on
 #define BARTAB_TAGSINDICATOR 1 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
 #define BARTAB_TAGSPX 5        // # pixels for tag grid boxes
 #define BARTAB_TAGSROWS 3      // # rows in tag grid (9 tags, e.g. 3x3)
@@ -76,6 +83,7 @@ static const Layout layouts[] = {
  	{ "[@]",      spiral },
  	{ "[\\]",     dwindle },
     { "[D]",      deck },
+    { NULL,       NULL }, 
 };
 
 /* key definitions */
