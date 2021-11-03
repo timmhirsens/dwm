@@ -12,8 +12,8 @@ static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 22;        /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 6;        /* vertical padding for statusbar */
+static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 11;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:size=10", "Font Awesome 5 Free Solid:size=10", "Font Awesome 5 Free Regular:size=10", "Font Awesome 5 Free Brands:size=10" };
 static const char dmenufont[]       = "JetBrainsMono Nerd Font:size=10";
 static const unsigned int baralpha = 0xd0;

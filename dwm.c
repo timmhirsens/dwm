@@ -588,7 +588,7 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click;
+	unsigned int i, x, click, occ = 0;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
@@ -603,9 +603,14 @@ buttonpress(XEvent *e)
 	}
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
-		do
+		for (c = m->clients; c; c = c->next)
+			occ |= c->tags == 255 ? 0 : c->tags;
+		do {
+			/* do not reserve space for vacant tags */
+			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+				continue;
 			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
+        } while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
@@ -2647,22 +2652,24 @@ updatestatus(void)
 void
 updatesystrayicongeom(Client *i, int w, int h)
 {
+    int rh = bh - vertpadbar;
 	if (i) {
-		i->h = bh;
+		i->h = rh;
 		if (w == h)
-			i->w = bh;
-		else if (h == bh)
+			i->w = rh;
+		else if (h == rh)
 			i->w = w;
 		else
-			i->w = (int) ((float)bh * ((float)w / (float)h));
+			i->w = (int) ((float)rh * ((float)w / (float)h));
+        i->y = i->y + vertpadbar / 2; 
 		applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
 		/* force icons into the systray dimensions if they don't want to */
-		if (i->h > bh) {
+		if (i->h > rh) {
 			if (i->w == i->h)
-				i->w = bh;
+				i->w = rh;
 			else
-				i->w = (int) ((float)bh * ((float)i->w / (float)i->h));
-			i->h = bh;
+				i->w = (int) ((float)rh * ((float)i->w / (float)i->h));
+			i->h = rh;
 		}
 	}
 }
@@ -2742,7 +2749,7 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
+		XMoveResizeWindow(dpy, i->win, i->x, vertpadbar / 2, i->w, i->h);
 		w += i->w;
 		if (i->mon != m)
 			i->mon = m;
